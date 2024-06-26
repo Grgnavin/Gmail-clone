@@ -1,9 +1,12 @@
+import { useState } from "react"
 import { FaCaretDown, FaUserFriends } from "react-icons/fa"
 import { GoTag } from "react-icons/go"
 import { IoMdMore, IoMdRefresh } from "react-icons/io"
-import { MdCrop, MdInbox } from "react-icons/md"
+import { MdCrop, MdInbox, MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md"
+import Messages from "./Messages"
 
 function Inbox() {
+    const [mailTypeSelected, setMailTypeSelected] = useState(0);
 
     const mailType = [
         {
@@ -35,18 +38,28 @@ function Inbox() {
                         <IoMdMore size={'20px'}/>
                     </div>
                 </div>
+                <div className="flex items-center gap-2 ">
+                    <p className="text-sm text-gray-500">1-50 of 100</p>
+                    <button className="hover:rounded-full hover:bg-gray-100"><MdKeyboardArrowLeft size={'24'}/></button>
+                    <button className="hover:rounded-full hover:bg-gray-100"><MdKeyboardArrowRight size={'24'}/></button>
+                </div>
             </div>
                 <div className="h-[90vh] overflow-y-auto">
                     <div className="flex items-center gap-1">
                     { mailType.map((item, index) => {
                         return (
-                            <button key={index}>
-                                {item.icon}
-                                <span>{item.text}</span>
+                            <button 
+                                key={index}
+                                className={`${mailTypeSelected === index ? 'border-b-4 border-b-blue-600 text-blue-600': 'border-b-4 border-b-transparent'}flex items-center gap-5 p-4 w-52 hover:bg-gray-100`}
+                                onClick={() => setMailTypeSelected(index)}
+                                >
+                                    {item.icon}
+                                    <span>{item.text}</span>
                             </button>
                         )
                     }) }
                     </div>
+                    <Messages />
                 </div>
         </div>
     )

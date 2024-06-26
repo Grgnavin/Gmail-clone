@@ -1,10 +1,14 @@
-import React from 'react'
+import { useState } from 'react'
 import { IoMdStar } from 'react-icons/io'
 import { LuPencil } from 'react-icons/lu'
 import { MdOutlineDrafts, MdOutlineKeyboardArrowDown, MdOutlineWatchLater } from 'react-icons/md'
 import { TbSend2 } from 'react-icons/tb'
+import SendMail from './SendMail'
 
 function SideBar() {
+    const [open, setOpen] =useState(false);
+
+
     const sideBarIcons = [
     {
         icon: <LuPencil size={'20px'}/>,
@@ -30,11 +34,12 @@ function SideBar() {
         icon: <MdOutlineKeyboardArrowDown size={'20px'}/>,
         text: "More"
     },
-]
+];
+
     return (
-        <div className='w-[15%]'>
+        <div className='w-[20%]'>
             <div className='p-3'>
-                <button className='flex items-center gap-3 p-4 rounded-2xl hover:shadow-lg bg-[#C2E7FF]'>
+                <button onClick={()=> setOpen()} className='flex items-center gap-3 p-4 rounded-2xl hover:shadow-lg bg-[#C2E7FF]'>
                     <LuPencil size={'20px'}/>
                     Compose
                 </button>
