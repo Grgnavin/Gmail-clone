@@ -3,11 +3,12 @@ import { IoMdStar } from 'react-icons/io'
 import { LuPencil } from 'react-icons/lu'
 import { MdOutlineDrafts, MdOutlineKeyboardArrowDown, MdOutlineWatchLater } from 'react-icons/md'
 import { TbSend2 } from 'react-icons/tb'
-import SendMail from './SendMail'
+import { useDispatch } from 'react-redux'
+import { setOpen } from '../redux/appSlice'
 
 function SideBar() {
-    const [open, setOpen] =useState(false);
-
+    // const [open, setOpen] =useState(false);
+    const dispatch = useDispatch();
 
     const sideBarIcons = [
     {
@@ -39,7 +40,7 @@ function SideBar() {
     return (
         <div className='w-[20%]'>
             <div className='p-3'>
-                <button onClick={()=> setOpen()} className='flex items-center gap-3 p-4 rounded-2xl hover:shadow-lg bg-[#C2E7FF]'>
+                <button onClick={()=> dispatch(setOpen(true))} className='flex items-center gap-3 p-4 rounded-2xl hover:shadow-lg bg-[#C2E7FF]'>
                     <LuPencil size={'20px'}/>
                     Compose
                 </button>
