@@ -4,8 +4,17 @@ import { CiCircleQuestion } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 import { PiDotsNineBold } from "react-icons/pi";
 import Avatar from "react-avatar";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSearchText } from "../../redux/appSlice";
 
 function Navbar() {
+    const [input, setInput] = useState('');
+    const dispatch = useDispatch(); 
+    useEffect(() => {
+        dispatch(setSearchText(input))
+    },[input])
+
     return (
         <div className="flex items-center justify-between mx-3 h-16">
             <div className="flex items-center gap-10">
@@ -26,6 +35,8 @@ function Navbar() {
                     <IoIosSearch size={'24px'} className="text-gray-700"/>
                     <input 
                         type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
                         className="rounded-full w-full bg-transparent outline-none px-1"
                         placeholder="Search Mail"
                     />

@@ -1,12 +1,23 @@
 import { MdCropSquare } from "react-icons/md"
 import { RiStarLine } from "react-icons/ri"
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"
+import { setSelectedEmail } from "../redux/appSlice";
 
 const Message = ({ email }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const openMail = () => {
+        dispatch(setSelectedEmail(email));
         navigate(`/mail/${email.id}`);
     };
+
+    const formattedDate = (email) => {
+        if (email?.createdAt && email.createdAt.seconds !== null) {
+            return new Date(email.createdAt.seconds*1000).toUTCString();
+        }
+        return 'unkown Date'
+    }
 
     return (
         <div onClick={openMail} className="flex items-start justify-between border-b border-gray-200 px-4 py-3 text-sm hover:cursor-pointer hover:shadow">
@@ -26,7 +37,7 @@ const Message = ({ email }) => {
                 </p>
             </div>
             <div className="flex-none text-gray-400 text-sm">
-                <p>{new Date(email?.createdAt.seconds*1000).toUTCString()}</p>
+                <p>{formattedDate(email)}</p>
             </div>
         </div>
     )
