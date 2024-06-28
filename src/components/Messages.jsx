@@ -23,9 +23,9 @@ function Messages() {
 
   useEffect(() => {
     const filteredEmail = emails?.filter((email) => {
-      return email?.searchText?.toLowerCase().includes(searchText?.toLowerCase()) ||
-                email?.to?.toLowerCase().includes(searchText?.toLowerCase())  ||
-                  email?.message?.toLowerCase().includes(searchText?.toLowerCase());  
+      return email?.subject?.toLowerCase().includes(searchText.toLowerCase()) ||
+              email?.to?.toLowerCase().includes(searchText.toLowerCase()) ||
+                email?.message?.toLowerCase().includes(searchText.toLowerCase());
     })
     setTempEmails(filteredEmail);
   },[searchText, emails])
