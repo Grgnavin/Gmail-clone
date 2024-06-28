@@ -5,12 +5,26 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { PiDotsNineBold } from "react-icons/pi";
 import Avatar from "react-avatar";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setSearchText } from "../../redux/appSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchText, setUser } from "../../redux/appSlice";
+import { AnimatePresence, motion } from "framer-motion";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 function Navbar() {
     const [input, setInput] = useState('');
+    const [toggle, setToggle] = useState(false);
     const dispatch = useDispatch(); 
+    const {user} = useSelector(store => store.appSlice)
+
+    const signOutHandler =() => {
+        signOut(auth).then(() => {
+            dispatch(setUser(null));
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
     useEffect(() => {
         dispatch(setSearchText(input))
     },[input])
@@ -53,13 +67,23 @@ function Navbar() {
                     <div className="p-3 rounded-full hover:bg-gray-100 cursor-pointer">
                         <PiDotsNineBold size={'24px'}/>
                     </div>
-                    <div className="cursor:pointer">
-                        <Avatar 
-                            src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png" 
-                            size="40" 
-                            round={true} 
-                        />
-                    </div>
+                    <div className='relative cursor-pointer'>
+                    <Avatar onClick={() => setToggle(!toggle)} src={user?.photoURL} round={true} size="40px"/>
+                    <AnimatePresence>
+                    {
+                        toggle && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.1 }}
+                            className='absolute right-2 z-20 shadow-lg bg-white rounded-md'>
+                            <p onClick={signOutHandler} className='p-2 underline'>LogOut</p>
+                        </motion.div>
+                        )
+                    }
+                    </AnimatePresence>
+            </div>
                 </div>
             </div>
         </div>

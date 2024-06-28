@@ -5,7 +5,7 @@ import { MdDeleteOutline, MdKeyboardArrowLeft, MdKeyboardArrowRight, MdOutlineAd
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom"
 import { db } from "../firebase";
-
+import { motion } from "framer-motion";
 
 
 function Mail() {
@@ -23,7 +23,11 @@ function Mail() {
   }
 
   return (
-    <div className='flex-1 bg-white rounded-xl mx-5'>
+    <motion.div 
+      initial= {{opacity: 0, y: -20}}
+      animate= {{opacity: 1, y:0}}
+      transition={{duration: 0.5}}
+    className='flex-1 bg-white rounded-xl mx-5'>
         <div className="flex items-center justify-between px-4">
           <div className="flex items-center gap-2 text-gray-700 py-2">
             <div onClick={() => navigate('/')} className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
@@ -77,7 +81,7 @@ function Mail() {
             <p>{selectedEmail?.message}</p>
           </div>
         </div>
-    </div>
+    </motion.div>
   )
 }
 
